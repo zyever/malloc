@@ -6,6 +6,7 @@ void *mymalloc(size_t size);
 typedef struct {
 size_t size;
 int free;
+metadata *next;
 } metadata;
 void myfree(void *ptr);
 #endif

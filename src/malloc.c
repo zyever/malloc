@@ -5,14 +5,21 @@
       
 
 void *mymalloc(size_t size){
+   
 void *ptr = NULL;
 if(size == 0){
 return NULL;    }
-metadata meta;
-meta.size=size;
+
+
 ptr = sbrk(size+sizeof(metadata));
+
 if(ptr==(void*)-1){
 return NULL;
 }
-return ptr+sizeof(metadata);
+    metadata *meta = (metadata*)ptr;
+    
+meta->size = size;
+meta->free = 0;
+
+return meta+1;
 }

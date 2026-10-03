@@ -10,9 +10,14 @@ if(ptr==NULL){
 printf("malloc failed\n");
 return -1;
 }
+metadata *meta = (metadata*)ptr-1;
+printf("size: %zu, free: %d\n",meta->size,meta->free);
 
-*ptr=10;
-printf("%d\n",*ptr);
+
+
+
+myfree(ptr);
+printf("after free size: %zu, free: %d\n",meta->size,meta->free);
 return 0;
 
 

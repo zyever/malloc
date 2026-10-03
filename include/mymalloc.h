@@ -3,10 +3,10 @@
 #include <unistd.h>
 
 void *mymalloc(size_t size);
-typedef struct {
-size_t size;
-int free;
-metadata *next;
+typedef struct metadata {
+    size_t size;
+    int free;
+    struct metadata *next;
 } metadata;
 void myfree(void *ptr);
 #endif

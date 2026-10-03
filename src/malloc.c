@@ -2,8 +2,7 @@
 #include"stdio.h"
    #include <unistd.h>
 #include"mymalloc.h"
-      
-metadata *head = NULL;
+ metadata *head = NULL;
 void *mymalloc(size_t size){
    
 
@@ -32,9 +31,16 @@ else{
     metadata *temp=head;
    
     while(temp->next!=NULL){
+        
+       
         temp=temp->next;}
         
         temp->next=meta;
+        while(temp!=NULL){
+            
+            printf(" temp :%p ,temp->next:%p\n",temp,temp->next);
+        temp=temp->next;
+        }
 }
 
 

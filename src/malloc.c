@@ -1,19 +1,18 @@
 #include"stdlib.h"
 #include"stdio.h"
    #include <unistd.h>
-
-       int brk(void *addr);
-       void *sbrk(intptr_t increment);
+#include"mymalloc.h"
+      
 
 void *mymalloc(size_t size){
 void *ptr = NULL;
 if(size == 0){
 return NULL;    }
-ptr = sbrk(size);
+metadata meta;
+meta.size=size;
+ptr = sbrk(size+sizeof(metadata));
 if(ptr==(void*)-1){
 return NULL;
-
 }
-
-return ptr;
+return ptr+sizeof(metadata);
 }

@@ -8,43 +8,59 @@ void *mymalloc(size_t size){
 
 void *ptr = NULL;
 if(size == 0){
-return NULL;    }
+return NULL; }
 
 
 
- 
 
 
-ptr = sbrk(size+sizeof(metadata));
-
-if(ptr==(void*)-1){
-return NULL;
-}
-    metadata *meta = (metadata*)ptr;
-
-     meta->next=NULL; 
-meta->size = size;
-meta->free = 0;
 if(head==NULL){
-head=meta;}
+    ptr=sbrk(size+sizeof(metadata));
+    if(ptr==(void*)-1){
+        return NULL;
+    }
+   metadata *meta = (metadata*)ptr;
+    meta->next=NULL;
+    meta->size = size;
+    meta->free = 0;
+    head=meta;
+    return meta+1;
+}
+
+
 else{
     metadata *temp=head;
-   
-    while(temp->next!=NULL){
-        
-       
-        temp=temp->next;}
-        
-        temp->next=meta;
-        while(temp!=NULL){
-            
-            printf(" temp :%p ,temp->next:%p\n",temp,temp->next);
-        temp=temp->next;
+   metadata *temp1;
+    while(temp!=NULL){
+        if(temp->free && temp->size >= size){
+            temp->free = 0;
+            return temp+1;
         }
+     temp1=temp;
+        temp=temp->next;
+        
+    }
+
+
+         ptr=sbrk(size+sizeof(metadata));
+          if(ptr==(void*)-1){
+             return NULL;
+         }
+         metadata *meta = (metadata*)ptr;
+        
+         meta->next=NULL;
+    meta->size = size;
+    meta->free = 0;
+        temp1->next=meta;
+        return meta+1;
+
+
+
+
+
+    
 }
 
 
-   
- 
-return meta+1;
+
 }
